@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IBW Vent Calculator</title>
+<style>
+body { font-family: Arial; padding:20px; background:#f4f6f8; }
+.container { max-width:400px; margin:auto; background:white; padding:20px; border-radius:12px; }
+input, select, button { width:100%; padding:12px; margin-top:10px; }
+button { background:#007bff; color:white; border:none; }
+.result { margin-top:20px; font-size:18px; }
+</style>
+</head>
 
+<body>
+<div class="container">
+<h2>IBW Vent Calculator</h2>
+
+<select id="sex">
+<option value="male">Male</option>
+<option value="female">Female</option>
+</select>
+
+<input type="number" id="feet" placeholder="Height (feet)">
+<input type="number" id="inches" placeholder="Height (inches)">
+
+<button onclick="calc()">Calculate</button>
+
+<div class="result" id="output"></div>
+</div>
+
+<script>
+function calc() {
+let sex = document.getElementById("sex").value;
+let ft = parseFloat(document.getElementById("feet").value);
+let inch = parseFloat(document.getElementById("inches").value);
+
+let totalInches = (ft * 12) + inch;
+let cm = totalInches * 2.54;
+
+let ibw = sex === "male"
+? 50 + 0.91 * (cm - 152.4)
+: 45.5 + 0.91 * (cm - 152.4);
+
+let vt6 = ibw * 6;
+let vt8 = ibw * 8;
+
+document.getElementById("output").innerHTML =
+"IBW: " + ibw.toFixed(1) + " kg<br>" +
+"VT Range: " + vt6.toFixed(0) + " - " + vt8.toFixed(0) + " mL";
+}
+</script>
+
+</body>
+</html>
